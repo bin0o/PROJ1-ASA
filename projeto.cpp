@@ -66,7 +66,6 @@ void p2(){
 	vector <long int> v1 = vaibuscardoinput();
 	vector <long int> v2 = vaibuscardoinputsemirrelevantes(v1);
 
-	int result=0;
 	int n = v1.size();
 	int m = v2.size();
 
@@ -85,11 +84,7 @@ void p2(){
 		}
 	}
 
-	for ( int k=0;k<m;k++){
-		if (res[k]>result)
-			result=res[k];
-	}
-	cout << result << endl;
+	cout << *max_element(res.begin(), res.end()) << endl;
 	
 }
 

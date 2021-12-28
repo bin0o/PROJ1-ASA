@@ -2,12 +2,13 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 
-vector<int> vaibuscardoinput(){
+vector<long int> vaibuscardoinput(){
 	int e;
-	vector <int> v;
+	vector <long int> v;
 	string s;
 	getline(cin,s);
 	istringstream is(s);
@@ -16,17 +17,25 @@ vector<int> vaibuscardoinput(){
 	return v;
 }
 
+vector<long int> vaibuscardoinputsemirrelevantes(vector<long int> vector1){
+	int e;
+	vector <long int> v;
+	string s;
+	getline(cin,s);
+	istringstream is(s);
+	while(is >> e)
+		if( find(vector1.begin(), vector1.end(), e) != vector1.end() )
+			v.push_back(e);
+	return v;
+}
+
 void p1(){
-	vector <int> v1 = vaibuscardoinput();
+	vector <long int> v1 = vaibuscardoinput();
 
 	int n = v1.size();
-	int lis[n];
-	int ways[n];
 
-	for(int i=0; i < n; i++){
-		lis[i] = 1;
-		ways[i] = 1;
-	}
+	vector <long int> lis(n,1);
+	vector <long int> ways(n,1);
 
 	int maxLis = 1;
 	int totalWays = 1;
@@ -54,17 +63,17 @@ void p1(){
 }
 
 void p2(){
-	vector <int> v1 = vaibuscardoinput();
-	vector <int> v2 = vaibuscardoinput();
+	vector <long int> v1 = vaibuscardoinput();
+	vector <long int> v2 = vaibuscardoinputsemirrelevantes(v1);
 
 	int result=0;
 	int n = v1.size();
 	int m = v2.size();
 
-	vector<int> res(n, 0); 
+	vector<long int> res(m, 0); 
 
 	for (int i=0; i<n ;i++){
-		int ongoing=0;
+		long int ongoing=0;
 
 		for (int j=0; j<m; j++){
 
@@ -76,7 +85,7 @@ void p2(){
 		}
 	}
 
-	for ( int k=0;k<n;k++){
+	for ( int k=0;k<m;k++){
 		if (res[k]>result)
 			result=res[k];
 	}

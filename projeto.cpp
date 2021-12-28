@@ -1,12 +1,23 @@
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <vector>
 using namespace std;
 
-void p1(){
-	vector <int> v1;
+
+vector<int> vaibuscardoinput(){
 	int e;
-	while(cin >> e)
-		v1.push_back(e);
+	vector <int> v;
+	string s;
+	getline(cin,s);
+	istringstream is(s);
+	while(is >> e)
+		v.push_back(e);
+	return v;
+}
+
+void p1(){
+	vector <int> v1 = vaibuscardoinput();
 
 	int n = v1.size();
 	int lis[n];
@@ -43,45 +54,54 @@ void p1(){
 }
 
 void p2(){
-	vector <int> v1;
-	vector <int> v2;
-	int e;
-	while(cin >> e)
-		v1.push_back(e);
-	
-	while(cin >> e)
-		v2.push_back(e);
+	vector <int> v1 = vaibuscardoinput();
+	vector <int> v2 = vaibuscardoinput();
 
+	int result=0;
 	int n = v1.size();
 	int m = v2.size();
-	int LCS[n+1][m+1];
-	for(int i=0; i<= n; i++){
 
-		for(int j=0; j<= m; j++){
+	vector<int> res(n, 0); 
 
-			if(i == 0 || j == 0)
-				LCS[i][j] = 0;
-			
-			else if(v1[i-1] == v2[j-1])
-				LCS[i][j] = 1 + LCS[i-1][j-1];
+	for (int i=0; i<n ;i++){
+		int ongoing=0;
 
-			else
-        		LCS[i][j] = max(LCS[i-1][j], LCS[i][j-1]);
+		for (int j=0; j<m; j++){
+
+			if (v1[i]==v2[j])
+				res[j]=max(ongoing+1,res[j]);
+
+			if (v1[i] > v2[j])
+				ongoing= max(ongoing,res[j]);
 		}
 	}
-	cout << LCS[n][m] << endl;
+
+	for ( int k=0;k<n;k++){
+		if (res[k]>result)
+			result=res[k];
+	}
+	cout << result << endl;
+	
 }
 
 
 int main(){
+	string s;
 	int p;
-	cin >> p;
+	getline(cin,s);
+	istringstream is(s);
+	is >> p;
 	switch(p){
 		case 1:
-			p1();
+			 p1();
+			 break;
 
 		case 2:
 			p2();
+			break;
+
+		default:
+			break;
 	}
 	return 0;
 }

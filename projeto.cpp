@@ -6,7 +6,7 @@
 #include <time.h>
 using namespace std;
 
-vector<long int> vaibuscardoinput()
+vector<long int> vaibuscardoinputParaP1()
 {
 	long int e;
 	vector<long int> v;
@@ -20,29 +20,26 @@ vector<long int> vaibuscardoinput()
 
 vector<long int> vaibuscardoinputParaP2()
 {
-	int i = 0;
+	int i=0;
 	long int e;
-	vector<long int> v;
+	vector <long int> v;
 	string s;
-	getline(cin, s);
+	getline(cin,s);
 	istringstream is(s);
-	while (is >> e)
-	{
-		if (i > 0 && v[i - 1] != e)
-		{
+	while(is >> e){
+		if (i>0 && v[i-1]!=e){
 			v.push_back(e);
-			i++;
-		}
-		else if (i == 0)
-		{
+            i++;
+            }
+		if (i==0){
 			v.push_back(e);
-			i++;
+            i++;
 		}
-	}
+    }
 	return v;
 }
 
-vector<long int> vaibuscardoinputsemirrelevantes(vector<long int> vector1)
+vector<long int> vaibuscardoinputcomuns(vector<long int> vector1)
 {
 	int i = 0;
 	long int e;
@@ -50,7 +47,7 @@ vector<long int> vaibuscardoinputsemirrelevantes(vector<long int> vector1)
 	string s;
 	getline(cin, s);
 	istringstream is(s);
-	while (is >> e)
+	while (is >> e){
 		if (find(vector1.begin(), vector1.end(), e) != vector1.end())
 		{
 			if (i > 0 && v[i - 1] != e)
@@ -58,13 +55,12 @@ vector<long int> vaibuscardoinputsemirrelevantes(vector<long int> vector1)
 				v.push_back(e);
 				i++;
 			}
-			else if (i == 0)
-			{
+			if (i == 0 ){
 				v.push_back(e);
 				i++;
 			}
 		}
-
+	}
 	return v;
 }
 
@@ -81,7 +77,7 @@ vector<long int> processingBothVectors(vector<long int> vector1, vector<long int
 
 void p1()
 {
-	vector<long int> v1 = vaibuscardoinput();
+	vector<long int> v1 = vaibuscardoinputParaP1();
 
 	int n = v1.size();
 
@@ -123,9 +119,9 @@ void p1()
 void p2()
 {
 	vector<long int> v1 = vaibuscardoinputParaP2();
-	vector<long int> v2 = vaibuscardoinputsemirrelevantes(v1);
+	vector<long int> v2 = vaibuscardoinputcomuns(v1);
 
-	v1 = processingBothVectors(v1, v2);
+	v1=processingBothVectors(v1,v2);
 
 	int n = v1.size();
 	int m = v2.size();
@@ -152,25 +148,14 @@ void p2()
 
 int main()
 {
-	clock_t tStart = clock();
 	string s;
 	int p;
 	getline(cin, s);
 	istringstream is(s);
 	is >> p;
-	switch (p)
-	{
-	case 1:
+	if(p==1)
 		p1();
-		break;
-
-	case 2:
+	if(p==2)
 		p2();
-		break;
-
-	default:
-		break;
-	}
-	printf("Time Taken: %f\n",(double)( clock() - tStart)/CLOCKS_PER_SEC);
 	return 0;
 }

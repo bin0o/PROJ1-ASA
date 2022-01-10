@@ -3,8 +3,11 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
-#include <time.h>
+#include <unordered_map>
 using namespace std;
+
+unordered_map<long int, long int> nums_v1;
+unordered_map<long int, long int> nums_common;
 
 vector<long int> vaibuscardoinputParaP1()
 {
@@ -29,10 +32,12 @@ vector<long int> vaibuscardoinputParaP2()
 	while(is >> e){
 		if (i>0 && v[i-1]!=e){
 			v.push_back(e);
+			nums_v1[e] = 1;
             i++;
             }
 		if (i==0){
 			v.push_back(e);
+			nums_v1[e] = 1;
             i++;
 		}
     }
@@ -48,32 +53,24 @@ vector<long int> vaibuscardoinputcomuns(vector<long int> vector1)
 	getline(cin, s);
 	istringstream is(s);
 	while (is >> e){
-		if (find(vector1.begin(), vector1.end(), e) != vector1.end())
+		if (nums_v1[e])
 		{
 			if (i > 0 && v[i - 1] != e)
 			{
 				v.push_back(e);
 				i++;
+				nums_common[e] = 1;
 			}
 			if (i == 0 ){
 				v.push_back(e);
 				i++;
+				nums_common[e] = 1;
 			}
 		}
 	}
 	return v;
 }
 
-vector<long int> processingBothVectors(vector<long int> vector1, vector<long int> vector2)
-{
-	vector<long int> finalVector;
-	for (int i = 0; i < (int)vector1.size(); i++)
-	{
-		if (find(vector2.begin(), vector2.end(), vector1[i]) != vector2.end())
-			finalVector.push_back(vector1[i]);
-	}
-	return finalVector;
-}
 
 void p1()
 {
@@ -118,10 +115,15 @@ void p1()
 
 void p2()
 {
-	vector<long int> v1 = vaibuscardoinputParaP2();
-	vector<long int> v2 = vaibuscardoinputcomuns(v1);
+	vector<long int> v0 = vaibuscardoinputParaP2();
+	vector<long int> v2 = vaibuscardoinputcomuns(v0);
 
-	v1=processingBothVectors(v1,v2);
+	vector<long int> v1;
+
+	for(auto n: v0){
+		if (nums_common[n])
+			v1.push_back(n);
+	}
 
 	int n = v1.size();
 	int m = v2.size();

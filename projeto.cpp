@@ -9,16 +9,14 @@ using namespace std;
 unordered_map<long int, long int> nums_v1;
 unordered_map<long int, long int> nums_common;
 
-vector<long int> vaibuscardoinputParaP1()
+void vaibuscardoinputParaP1(vector<long int> &v)
 {
 	long int e;
-	vector<long int> v;
 	string s;
 	getline(cin, s);
 	istringstream is(s);
 	while (is >> e)
 		v.push_back(e);
-	return v;
 }
 
 vector<long int> vaibuscardoinputParaP2()
@@ -74,41 +72,46 @@ vector<long int> vaibuscardoinputcomuns(vector<long int> vector1)
 
 void p1()
 {
-	vector<long int> v1 = vaibuscardoinputParaP1();
+	vector<long int> v1;
+	vaibuscardoinputParaP1(v1);
 
 	int n = v1.size();
 
-	vector<long int> lis(n, 1);
-	vector<long int> ways(n, 1);
+	int lis[n];
+	int ways[n];
+
+	for (int i=0;i<n;i++){
+		lis[i]=1;
+		ways[i]=1;
+	}
+
 
 	int maxLis = 1;
 	int totalWays = 1;
-	for (int i = 1; i < n; i++)
-	{
-		for (int j = 0; j < i; j++)
-		{
-			if (v1[j] < v1[i])
-			{
-				if (lis[i] < lis[j] + 1)
-				{
-					lis[i] = lis[j] + 1;
-					ways[i] = ways[j];
-				}
-				else if (lis[i] == lis[j] + 1)
-				{
-					ways[i] += ways[j];
-				}
+	for (int i = 1; i < n; i++){
+		int lis_i=lis[i];
+		int ways_i=ways[i];
+		int current =v1[i];
+		for (int j = 0; j < i; j++){
+			if (v1[j] < current){
+
+				if (lis_i < lis[j] + 1){
+					lis_i = lis[j] + 1;
+					ways_i = ways[j];
+					}
+				else
+					ways_i+=(lis_i==lis[j]+1)*ways[j];
 			}
 		}
+		lis[i]=lis_i;
+		ways[i]=ways_i;
 		if (lis[i] > maxLis)
 		{
 			maxLis = lis[i];
 			totalWays = ways[i];
 		}
-		else if (lis[i] == maxLis)
-		{
-			totalWays += ways[i];
-		}
+		else 
+			totalWays+=(lis[i]==maxLis)*ways[i];
 	}
 	cout << maxLis << " " << totalWays << endl;
 }
@@ -150,11 +153,9 @@ void p2()
 
 int main()
 {
-	string s;
 	int p;
-	getline(cin, s);
-	istringstream is(s);
-	is >> p;
+	cin >> p;
+	cin.ignore();
 	if(p==1)
 		p1();
 	if(p==2)

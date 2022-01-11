@@ -9,8 +9,7 @@ using namespace std;
 unordered_map<long int, long int> nums_v1;
 unordered_map<long int, long int> nums_common;
 
-void vaibuscardoinputParaP1(vector<long int> &v)
-{
+void inputP1(vector<long int> &v){
 	long int e;
 	string s;
 	getline(cin, s);
@@ -19,8 +18,7 @@ void vaibuscardoinputParaP1(vector<long int> &v)
 		v.push_back(e);
 }
 
-vector<long int> vaibuscardoinputParaP2()
-{
+vector<long int> inputP2(){
 	int i=0;
 	long int e;
 	vector <long int> v;
@@ -42,8 +40,7 @@ vector<long int> vaibuscardoinputParaP2()
 	return v;
 }
 
-vector<long int> vaibuscardoinputcomuns(vector<long int> vector1)
-{
+vector<long int> commonInputs(vector<long int> v1){
 	int i = 0;
 	long int e;
 	vector<long int> v;
@@ -69,11 +66,9 @@ vector<long int> vaibuscardoinputcomuns(vector<long int> vector1)
 	return v;
 }
 
-
-void p1()
-{
+void p1(){
 	vector<long int> v1;
-	vaibuscardoinputParaP1(v1);
+	inputP1(v1);
 
 	int n = v1.size();
 
@@ -116,10 +111,9 @@ void p1()
 	cout << maxLis << " " << totalWays << endl;
 }
 
-void p2()
-{
-	vector<long int> v0 = vaibuscardoinputParaP2();
-	vector<long int> v2 = vaibuscardoinputcomuns(v0);
+void p2(){
+	vector<long int> v0 = inputP2();
+	vector<long int> v2 = commonInputs(v0);
 
 	vector<long int> v1;
 
@@ -151,8 +145,7 @@ void p2()
 	cout << *max_element(res.begin(), res.end()) << endl;
 }
 
-int main()
-{
+int main(){
 	int p;
 	cin >> p;
 	cin.ignore();
